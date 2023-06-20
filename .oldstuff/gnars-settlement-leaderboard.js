@@ -1,4 +1,4 @@
-import { settlements } from "./wrappers/subgraph.js";
+import { settlements } from "../wrappers/subgraph.js";
 import pkg from '@apollo/client';
 const { useQuery } = pkg;
 import { useCoingeckoPrice } from "@usedapp/coingecko";
