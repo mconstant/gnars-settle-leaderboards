@@ -1,0 +1,16 @@
+{
+  "name": "gnars-settle-leaderboards",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@apollo/client": "^3.7.15",
+    "ethers": "^6.6.0",
+    "yarn": "^1.22.19"
+  }
+}
