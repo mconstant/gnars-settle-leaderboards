@@ -12,5 +12,8 @@
     "@apollo/client": "^3.7.15",
     "ethers": "^6.6.0",
     "yarn": "^1.22.19"
+  },
+  "devDependencies": {
+    "@types/node": "^20.3.1"
   }
 }
