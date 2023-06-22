@@ -2,11 +2,13 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import {useQuery} from "@apollo/client";
-import { settlements } from '../wrappers/subgraph';
+import {settlements} from './wrappers/subgraph';
 import {useCoingeckoPrice} from "@usedapp/coingecko";
+import { Table } from 'react-bootstrap';
+import { ethers } from 'ethers';
 
 function App() {
-  const { loading, error, data } = useQuery(settlements(tops || 10));
+    const {loading, error, data} = useQuery(settlements(10));
     const etherPrice = Number(useCoingeckoPrice('ethereum', 'usd'));
 
     if (loading) {
@@ -31,14 +33,41 @@ function App() {
                 <p>
                     gnars settlement leaderboards
                 </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Learn React
-                </a>
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <Table borderless style={{ alignSelf: 'center', width: 800 }}>
+                        <tr>
+                            <th>#</th>
+                            <th>Rank</th>
+                            <th style={{ textAlign: 'center' }}>#Settled</th>
+                            <th style={{ textAlign: 'center' }}>%Settled</th>
+                            <th style={{ textAlign: 'center' }}>Total ETH</th>
+                            <th style={{ textAlign: 'center' }}>Total $</th>
+                        </tr>
+                {/**/}
+                        {data.accounts.map((item: any, index: number) => (
+                            <tr>
+                                <td>{index + 1}</td>
+                                <td>{item.id}</td>
+                                <td style={{ textAlign: 'center' }}>{item.settlementCount}</td>
+                                <td style={{ textAlign: 'center' }}>
+                                    {(
+                                        (item.totalSettlementFee / data.governances[0]?.totalSettlementFee) *
+                                        100
+                                    ).toFixed(2)}{' '}
+                                    %
+                                </td>
+                                <td style={{ textAlign: 'center' }}>
+                                    {ethers.utils.formatEther(item.totalSettlementFee).substring(0, 5)}
+                                </td>
+                                <td style={{ textAlign: 'center' }}>
+                                    {(Number(ethers.utils.formatEther(item.totalSettlementFee)) * etherPrice).toFixed(
+                                        2,
+                                    )}
+                                </td>
+                            </tr>
+                        ))}
+                    </Table>
+                </div>
             </header>
         </div>
     );

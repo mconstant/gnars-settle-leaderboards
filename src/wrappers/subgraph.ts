@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 
 export const settlements = (tops: number) => gql`
   {
@@ -13,3 +13,8 @@ export const settlements = (tops: number) => gql`
   }
 `;
 
+export const clientFactory = (uri: string) =>
+    new ApolloClient({
+        uri,
+        cache: new InMemoryCache(),
+    });
